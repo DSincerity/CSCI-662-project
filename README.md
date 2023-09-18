@@ -1,12 +1,12 @@
 # CSCI 662 Group project
 
 ## To run the codes for training, you should first download model files from the link of google drive. Then, you should put them into the right location.
-
+- [google drive link](https://drive.google.com/drive/folders/1aNfWwn9un3r4XYrUf2Xy2PzuuQjLaJY3?usp=sharing)
 - files in the "wordvector" dirctory -> ./wordvector
 - files in the "model" directory -> ./metric/model
 - files in the "Blenderbot_small-90M" directory -> ./Blenderbot_small-90M
 
-=========================================================================================================
+===================================================================================
 ### This is the README.md of KEMI paper.
 
 # KEMI
@@ -42,7 +42,8 @@ If the code or data is used in your research, please star this repo and cite our
 }
 ```
 
-========================================================================================================
+
+===================================================================================
 ### KEMI is based on this code base. Here is README.md of the base code repo.
 
 # Running Scripts for *ESC*

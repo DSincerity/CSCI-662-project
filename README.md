@@ -1,10 +1,10 @@
 # CSCI 662 Group project
 
 ## To run the codes for training, you should first download model files from the link of google drive. Then, you should put them into the right location.
-- files in the "models" dirctory -> ./models
-- files in the "wordvector" dirctory -> ./wordvector
-- files in the "metric_model" directory -> ./metric/model
 
+- files in the "wordvector" dirctory -> ./wordvector
+- files in the "model" directory -> ./metric/model
+- files in the "Blenderbot_small-90M" directory -> ./Blenderbot_small-90M
 
 =========================================================================================================
 ### This is the README.md of KEMI paper.

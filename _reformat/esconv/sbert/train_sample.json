@@ -1,0 +1,1099 @@
+{
+    "instance": [
+        {
+            "emotion_type": "anxiety",
+            "problem_type": "job crisis",
+            "situation": "I am on short term disability and I am afraid I will lose my job if I don't go back soon.",
+            "dialog": [
+                {
+                    "text": "Hello good afternoon.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to say hello [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Hi, good afternoon.",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] Be nice to people. [str] fuck, fuuuuuuuuuuuuuuuuuuck, fuckkk, fuuuuuuuuck, gt [aff] Joyful"
+                },
+                {
+                    "text": "I'm feeling anxious that I am going to lose my job.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] worried [xIntent] none [xWant] to get a new job [xNeed] none [xEffect] frowns"
+                },
+                {
+                    "text": "Losing a job is always anxious.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] could you get a job? [str] extremy, whenevrt, teachers, ground, havent [aff] Afraid"
+                },
+                {
+                    "text": "I hope I don't.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be successful [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Why do you think you will lose your job?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] to care for yourself. [str] lt, comment, rough, fun, hey [aff] Excited"
+                },
+                {
+                    "text": "I am on short term disability and I am not ready to go back to work yet but I do not have any job protection.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to get a new job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Oh so your job is not protected and your short term disability will end soon? Is that correct?",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] If you're lazy, why? [str] sadness, fine, sad, normal, angry [aff] Sad"
+                },
+                {
+                    "text": "It's not ending yet, but no my job is not protected. I live in the United States, but I have not been at my job long enough to earn protection for medical leave.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to get a job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "you have to have been here for a year, and I started November 2020",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to get a job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I'm afraid that I will lose my job since I'm still on disability for the foreseeable future.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to get a new job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I see. Have you spoken to HR?",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] Or want me to talk. [str] commit, killing, death, painless, option [aff] Sad"
+                },
+                {
+                    "text": "I have, but they are telling me that it is up to my department manager who isn't actually getting back to me about it yet.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] frustrated [xIntent] none [xWant] to get a raise [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Your department manager is not answering you?",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] to care for yourself. [str] friend, crush, unattached, fit, left [aff] Hopeful"
+                },
+                {
+                    "text": "No, I have sent them a few emails about it. It makes me nervous. I do not have a phone number to call and my psychiatrist really does not think I am ready to go back to the stress of my job.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] stressed [xIntent] none [xWant] to get a new job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I wish I could just call him, but I do not have a phone number for him. Just his email.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] email [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Have you tried mentioning that to HR?",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] I hope this helps, if you have any questions, feel free to ask away. [str] polygamy, sara, cali, ken, apologize [aff] Sad"
+                },
+                {
+                    "text": "HR is the one who gave me his email.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] helpful [xIntent] to be helpful [xWant] to read the email [xNeed] to have a computer [xEffect] none"
+                },
+                {
+                    "text": "I don't think he has a direct work line, and they're not allowed to give out personal information.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] guilty [xIntent] none [xWant] to keep their job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Yes that is how most employments work about providing personal information.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] to care for yourself. [str] 13f, 27f, subs, purely, abandoned [aff] Angry"
+                },
+                {
+                    "text": "That in itself causes anxiety to most since other forms of communication is not possible especially if they are not responding to ciritcal matters.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] to care for yourself. [str] 13f, 27f, subs, purely, abandoned [aff] Angry"
+                },
+                {
+                    "text": "Yes! 100%. Every time my phone rings I get nervous that I'm being fired and I'm worried I made a mistake going out on disability. I needed to though, but I'm nervous.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] sad [xNeed] none [xEffect] nervous"
+                },
+                {
+                    "text": "No you should not have to feel you made a mistake for the time you are taking out of work for a necessity.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] Hey, I know how you are feeling. [str] purpose, change, gets, future, offer [aff] Sad"
+                },
+                {
+                    "text": "Thank you for saying that. That does make me feel better. It sucks sometimes we have to choose between our health and our jobs. We don't get paid to take care of our health though, we only get paid to work.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] healthy [xIntent] none [xWant] to be healthy [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "You know yourself more than anybody and you need to take care of yourself.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] Eating healthy. [str] christmas, holidays, merry, holiday, season [aff] Lonely"
+                }
+            ]
+        },
+{
+            "emotion_type": "depression",
+            "problem_type": "ongoing depression",
+            "situation": "I have been in a depression since my father died last year. We have had to sell our home and move to a much smaller place due to losing his income. I am older but lived with my parents to help them because they are both ill. it has been an ongoing struggle",
+            "dialog": [
+                {
+                    "text": "How are you doing today?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": ""
+                },
+                {
+                    "text": "hello I am ok how are you?",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be ok [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I am well, what's on your mind?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] Your a beautiful person, and you are good enough. [str] fuck, fuuuuuuuuuuuuuuuuuuck, fuckkk, fuuuuuuuuck, gt [aff] Joyful"
+                },
+                {
+                    "text": "well as I stated above my father passed last year and now due to finances we need to move. I am out of work due to Covid19 it is hard moving not being able to support my family",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to get a job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "So sorry to hear about your plight. Life is a roller coaster and sometimes it gets out of control, I hope things slow down so you can get things straightened out.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] To make someone happy. [str] commit, killing, death, painless, option [aff] Sad"
+                },
+                {
+                    "text": "thank you! I find myself so stressed then I get scared and depressed wondering what will the future hold will we be ok will we take another hit will I get sick will my Mother be ok",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] none [xIntent] none [xWant] to be happy [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I understand your concerns about being stressed, scared and depressed. The risk of family getting sick is certainly valid.",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] To make someone happy. [str] posting, pointless, ripped, passion, goal [aff] Hopeful"
+                },
+                {
+                    "text": "it keeps me up at night and I cant seem to get away form it even for a moment",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] annoyed [xIntent] none [xWant] to sleep [xNeed] none [xEffect] night"
+                },
+                {
+                    "text": "I too worry about things I feel I cannot control, the lack of sleep due to this just makes it worse so I try to think of positive things, but its hard.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] I've resorted to taking Benadryl to help me sleep. [str] vitamin, mood, increasing, b12, irritation [aff] Annoyed"
+                },
+                {
+                    "text": "yes and its always in the back of my mind burning. Like don't be to happy because things are going to fail",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be left alone [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Its hard to stop those negative thoughts, but the first step is sharing your feelings with others and talking about it. You are now on your way to healing.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] Stay strong &amp; stay alive. [str] purpose, change, gets, future, offer [aff] Sad"
+                },
+                {
+                    "text": "It does help to talk about it with someone who doesn't judge",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] good [xIntent] to be helpful [xWant] to be a good friend [xNeed] to have a problem [xEffect] none"
+                },
+                {
+                    "text": "I can see in your words how stressed you are and troubled.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] To make someone happy. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "This whole covid thing makes it 10 times worse",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] bad [xIntent] none [xWant] to apologize [xNeed] none [xEffect] gets yelled at"
+                },
+                {
+                    "text": "May I suggest that you seek some face to face support from a best friend or close family member.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] Numbness, as it were. [str] episode, depressive, protests, educate, bf [aff] Sad"
+                },
+                {
+                    "text": "easier said then done I'm high risk so I have been social distancing",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be a good person [xWant] to be successful [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Its still possible. Social distancing, six feet away but in maybe your backyard or even a park away from others so you can talk with some degree of confidence that its private. Just being around another person is so very supportive and positive. Please try.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] To make someone happy. [str] trust, firsts, idiots, acted, met [aff] Hopeful"
+                },
+                {
+                    "text": "maybe but I need to be carful plus honest I dont want many people to know about my feelings",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] guilty [xIntent] none [xWant] my actions [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "True. Remember, you are not the only one facing these troubles, others are tackling it too. Try also to google online support groups on Reddit and blogs for additional assistance and suggestions from those who faced it and succeeded. Doing what others did to overcome it means not having to reinvent the whole process on your own.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] Your showing empathy. [str] annoys, solid, deeply, busy, check [aff] Guilty"
+                },
+                {
+                    "text": "maybe an online chat group",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be social [xWant] to get to know people [xNeed] to have a chat room [xEffect] none"
+                },
+                {
+                    "text": "That's the way to go. Keep seeking help. The right solution is there for you. Now you have a plan to get started.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] To make friends. [str] making, maintain, attract, relationships, friendships [aff] Apprehensive"
+                },
+                {
+                    "text": "well I don't know if its a plan but an idea just knowing I'm not alone helps",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be alone [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Yes, it a problem so many people are facing.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] Why are you alone? [str] x200b, amp, chances, downhill, immediately [aff] Hopeful"
+                },
+                {
+                    "text": "My own family members are facing this too.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] Why are you alone? [str] x200b, amp, chances, downhill, immediately [aff] Hopeful"
+                },
+                {
+                    "text": "yes I know and with covid so many are depressed stressed and sad",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to get better [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I read a few articles on Psychology today website that might help you also. They discuss how to control stress and overcome depression in this world of COVID. Written by some doctors and they are free to read.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] Then I start getting better. [str] episode, depressive, protests, educate, bf [aff] Sad"
+                },
+                {
+                    "text": "thanks I will have to look online take your suggestion",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] good [xIntent] none [xWant] to make a decision [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "You are welcome. You are on your way.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] To explore and view nature, to be happy and have fun. [str] purpose, change, gets, future, offer [aff] Hopeful"
+                },
+                {
+                    "text": "thank you for your kind words",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to show appreciation [xWant] to be a good person [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "It was my pleasure.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] happy enough to find life worth living [str] worth, purpose, living, meaning, happiness [aff] Joyful"
+                },
+                {
+                    "text": "I will look online for the info you suggested I will see if maybe I can talk to a friend if we can do safely thanks again",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be polite [xWant] to be friends [xNeed] to call him [xEffect] none"
+                }
+            ]
+        },
+{
+            "emotion_type": "anxiety",
+            "problem_type": "job crisis",
+            "situation": "I would like to get an online job  but it is very competitive.",
+            "dialog": [
+                {
+                    "text": "I feel obligated to help you this Christmas Night.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": ""
+                },
+                {
+                    "text": "Hello Hello",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to greet someone [xWant] to say hello [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Who am I currently speaking with?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] Be nice to people. [str] fuck, fuuuuuuuuuuuuuuuuuuck, fuckkk, fuuuuuuuuck, gt [aff] Joyful"
+                },
+                {
+                    "text": "I am Bob, your Christmas Night therapist and helper.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] Be nice to people. [str] fuck, fuuuuuuuuuuuuuuuuuuck, fuckkk, fuuuuuuuuck, gt [aff] Joyful"
+                },
+                {
+                    "text": "I hope I can assist you this Christmas Night.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] Be nice to people. [str] fuck, fuuuuuuuuuuuuuuuuuuck, fuckkk, fuuuuuuuuck, gt [aff] Joyful"
+                },
+                {
+                    "text": "It takes courage to tell how you are feeling.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] Be nice to people. [str] fuck, fuuuuuuuuuuuuuuuuuuck, fuckkk, fuuuuuuuuck, gt [aff] Joyful"
+                },
+                {
+                    "text": "Hello Bob, nice to meet you",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be nice [xWant] to introduce you [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I would like to talk but not sure if I can I will try",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] unsure [xIntent] none [xWant] to listen [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "How can I help you?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] We are always here to listen. [str] chat, talk, willing, wanna, wants [aff] Hopeful"
+                },
+                {
+                    "text": "I am a caregiver and i can only come back and forth",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] responsible [xIntent] to be responsible [xWant] to be a good person [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Please do your best. That is all I can expect.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] to give you something more tangible. [str] support, advice, friend, helping, professional [aff] Faithful"
+                },
+                {
+                    "text": "Can you elaborate? What do you mean by that?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] to give you something more tangible. [str] support, advice, friend, helping, professional [aff] Faithful"
+                },
+                {
+                    "text": "You're doing great by contributing to your own cause on Christmas Night.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] to give you something more tangible. [str] support, advice, friend, helping, professional [aff] Faithful"
+                },
+                {
+                    "text": "Do you like Christmas cookies?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] to give you something more tangible. [str] support, advice, friend, helping, professional [aff] Faithful"
+                },
+                {
+                    "text": "My main job started so i am in this room an at the same time i wan to do mTurk and take care of them]",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be helpful [xWant] to be a good friend [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Bob has some jelly cookies for you.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "I feel good asking you about how I can give you true insights on life.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "You made the right decision to join and discuss your feelings. Do you like the Christmas Holidays?",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "I can suggest Uber or Lyft or Door Dash or Grub Hub for you.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "I feel that you can earn and not be so sad and depressed this holiday.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "I am baking cookies for others, so don't feel sad. Maybe I can cheer you up with chocolate chip cookies.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "I am here to help you in soooo many ways.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] Just to feel better [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "that is wonderful",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be a success [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I love chocolate chip cookie",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to eat it [xNeed] none [xEffect] buys a cookie"
+                },
+                {
+                    "text": "thanks for your encouragemnt",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be helpful [xWant] to be heard [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I think that already helped,e",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be helpful [xWant] to be thanked [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Yes, it is. I love chocoalate chip.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] Be thankful. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "Do you have the chance to make Christmas Cookies?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] Be thankful. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "Perhaps you could bake some using Bob's Xmas Cookie Recipe and share the joy that Christmas brings to the World.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] Be thankful. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "Would you be interested?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] Be thankful. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "not today but sometime this week.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be a good friend [xWant] to get a good grade [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "oh nice 1",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be happy [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "yes please",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to please others [xWant] to be liked [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Cooking cookies for others is a great way to cheer up. You could also create a small business by making your own type of cookies.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] To make someone happy. [str] someplace, expressed, views, certainly, embarrass [aff] Jealous"
+                },
+                {
+                    "text": "I made oatmeal cookie last week. I love baking",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] satisfied [xIntent] to eat [xWant] to eat [xNeed] to buy cookies [xEffect] eats"
+                },
+                {
+                    "text": "wonderful, i would pay $ to buy Bob's cookie",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to eat [xWant] to eat the cookie [xNeed] to have money [xEffect] none"
+                },
+                {
+                    "text": "You said you love baking? Well, other people who see you love to cook will get Joy from you. : )",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] To make someone happy. [str] making, maintain, attract, relationships, friendships [aff] Jealous"
+                },
+                {
+                    "text": "nice, thank you",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to show appreciation [xWant] to be polite [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I feel good to share my insights.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] What are you going to say ? [str] purpose, change, gets, future, offer [aff] Joyful"
+                },
+                {
+                    "text": "yes I love it. I put 2 cups of sugar all the time.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to have a good time [xWant] to taste it [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "2 sticks ofbutter",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] satisfied [xIntent] to eat [xWant] to eat [xNeed] to get a knife [xEffect] none"
+                },
+                {
+                    "text": "Did you need any other insights from me to be glad?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] To explore and view nature, to be happy and have fun. [str] eating, weight, eat, lose, fat [aff] Hopeful"
+                },
+                {
+                    "text": "I feel that being a professional baker my be the right career for you!",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] To explore and view nature, to be happy and have fun. [str] eating, weight, eat, lose, fat [aff] Hopeful"
+                },
+                {
+                    "text": "I am full, and I am good",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] full [xIntent] none [xWant] to rest [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "thanks it was great to talk to you Bob, Xmas couselor",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be friendly [xWant] to tell you how much they like you [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Do you need help with anything else?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] To make friends. [str] honest, vent, giving, miserable, kinda [aff] Devastated"
+                },
+                {
+                    "text": "I will think about it",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] thoughtful [xIntent] to be thoughtful [xWant] to make a decision [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "im good, have a good evening",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to sleep [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I feel that you are on your way to a new cooking career.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] I just want to sleep. [str] lt, comment, rough, fun, hey [aff] Excited"
+                }
+            ]
+        },
+{
+            "emotion_type": "depression",
+            "problem_type": "breakup with partner",
+            "situation": "turned in ex gf to cps for giving her kids drugs.",
+            "dialog": [
+                {
+                    "text": "Hello! Hope you are doing well. How may I assist you?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": ""
+                },
+                {
+                    "text": "my recent ex gf gave her daughters drugs while on a video chat with me. While being very dishonest in our relationship, i am devestated about the truth of all of it now that its over. I really loved her. and her kids. we had some great times. I turned her in for giving her kids drugs as thats not okay.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] guilty [xIntent] to be a good parent [xWant] to make sure they are ok [xNeed] to have sex [xEffect] none"
+                },
+                {
+                    "text": "today im super sad. i dont have any motivation. I dont want to really be around, and im trapped in my thoughts with everything. i had to move to get away from her stalking me. now im in a new place trying to find a job and get set up here. Its difficult to start over.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] frustrated [xIntent] none [xWant] there is no other job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "its a pretty intense situation i admit.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to relax [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "You are girlfriend is giving drugs to hew own kids. Did I get it right?",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] Just to feel better [str] purpose, change, gets, future, offer [aff] Hopeful"
+                },
+                {
+                    "text": "That is what she did. Among many other things.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be successful [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "That is really intense, unacceptable. I am feeling sorry for the poor little girl and you. It looks like there is something wrong with her. I can understand what you are going through.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] What is your goal in life? [str] deserved, bag, raped, beat, bend [aff] Impressed"
+                },
+                {
+                    "text": "Its a difficult time. I want to do nothing. It feels very bleek right now worrying about finances and getting set up in a new state.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] worried [xIntent] none [xWant] to get a job [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "It must be hard time for you. You should not worry about her. You should think about your job and the poor girl who is trapped with her.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] to care for yourself. [str] rts, pleasing, approval, values, invisible [aff] Hopeful"
+                },
+                {
+                    "text": "her daughters now both live with their dads. so thats taken care of, he kids are safer and better off. I however am devastated that the whole relationship wound up a lie and the whole thing has me really in a bad place mentally.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] physically [xNeed] none [xEffect] physically"
+                },
+                {
+                    "text": "I felt the same way when I broke up with my friend for some pathetic things which she did. The good part is girls are safe now. Give some time to yourself. Time will heal everything.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] *I know it's weird, but it's hard to explain* [str] father, ridicules, gf, bets, fixation [aff] Sad"
+                },
+                {
+                    "text": "Thats a hard light to see at the end of the tunnel when things are bleek.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to get out of the tunnel [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "im not sure what else to do.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] confused [xIntent] none [xWant] to do something else [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "My mind runs away a bit right now, its just all stress ful",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] stressed [xIntent] none [xWant] to relax [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "So sorry to hear about that. You should indulge yourself in some activities like yoga or meditation.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] to care for yourself. [str] purpose, change, gets, future, offer [aff] Apprehensive"
+                },
+                {
+                    "text": "talk to your family and friends and go to them for a while. It will help you and you can come out of it.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] to care for yourself. [str] purpose, change, gets, future, offer [aff] Apprehensive"
+                },
+                {
+                    "text": "Finding a better job.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be successful [xWant] to get a raise [xNeed] to apply for jobs [xEffect] gets promoted"
+                },
+                {
+                    "text": "might be a more productive task.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] satisfied [xIntent] to be successful [xWant] to get a raise [xNeed] none [xEffect] gets promoted"
+                },
+                {
+                    "text": "You will get one soon. Keep working on. My best wishes are there with you. Time never stay the same.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] Become better. [str] motivated, motivate, motivation, motivates, tips [aff] Hopeful"
+                },
+                {
+                    "text": "you dont want to continue to talk",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] relieved [xIntent] to be alone [xWant] to leave [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "No, that is not the case. You can talk as much as you want.",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] Don't wither away. [str] lonely, loneliness, surrounded, connection, connect [aff] Hopeful"
+                },
+                {
+                    "text": "I see. i thought you had left.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to go home [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "No I am hear and thinking of you and trying to figure out how can you come out of it.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] We here want you to be here too. [str] poker, bald, shaved, geek, proceeded [aff] Sad"
+                }
+            ]
+        },
+{
+            "emotion_type": "disgust",
+            "problem_type": "problems with friends",
+            "situation": "one of my friends cheated on her boyfriend.",
+            "dialog": [
+                {
+                    "text": "Hi can you help me with my problem?",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] helpful [xIntent] to be helpful [xWant] to help me [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Hello. What's on your mind?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] I can try to help. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "I'm disgusted with my friend for cheating on her boyfriend. Am I right to feel this way?",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be right [xNeed] to be with someone [xEffect] none"
+                },
+                {
+                    "text": "Your feelings are valid, no matter what they are.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] To learn things.\u201d  \u201cLove never fails.. [str] legit, recognize, realised, sucks, maybe [aff] Sad"
+                },
+                {
+                    "text": "Why do you think you're disgusted with her?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] To learn things.\u201d  \u201cLove never fails.. [str] legit, recognize, realised, sucks, maybe [aff] Sad"
+                },
+                {
+                    "text": "Because she's not acting the way she should be acting.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] ashamed [xIntent] none [xWant] to be a better person [xNeed] none [xEffect] gets scolded"
+                },
+                {
+                    "text": "Her boyfriend is a nice guy so he doesn't deserve this treatment",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be a good person [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "It sounds like she did something you find really immoral.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] Become better. [str] blame, murder, fallen, shiny, everytime [aff] Sad"
+                },
+                {
+                    "text": "Is their relationship generally pretty good, to your knowledge?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] Become better. [str] blame, murder, fallen, shiny, everytime [aff] Sad"
+                },
+                {
+                    "text": "Yeah, but I'm also thinking it's not my business. I should just stay out of it.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] relieved [xIntent] none [xWant] leave [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Well I thought it was good until that happened. He doesn't know. So I just feel gross around them.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to avoid them [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Have you talked to your friend about what she did?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] to care for yourself. [str] eating, weight, eat, lose, fat [aff] Sad"
+                },
+                {
+                    "text": "Yeah, she doesn't really care because she's not going to tell him. I'm questioning whether I should still be friends with her.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be friends [xWant] to be friends [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "You're definite right to be questioning if this is the sort of person you want to be friends with.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] We can be friends. [str] making, maintain, attract, relationships, friendships [aff] Lonely"
+                },
+                {
+                    "text": "It's hard to stop thought because we work at the same place.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] confused [xIntent] none [xWant] to be successful [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "though..",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] satisfied [xIntent] to be helpful [xWant] to get a drink [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "If her behavior is getting to you like this, I definitely suggest you try to keep some distance from her as much as you can.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] To make someone happy. [str] support, advice, friend, helping, professional [aff] Hopeful"
+                },
+                {
+                    "text": "Yeah, I've been trying to, but she's always talking to me",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] annoyed [xIntent] to be heard [xWant] to get a date [xNeed] none [xEffect] gets yelled at"
+                },
+                {
+                    "text": "It might be a good idea to explain why you're upset with her, even though that's likely to upset her.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] She might just not know how to handle the situation. [str] chit, swerves, nice, enjoyed, message [aff] Annoyed"
+                },
+                {
+                    "text": "I guess, but I'd rather just avoid her.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] guilty [xIntent] to avoid her [xWant] to avoid her [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I'm thinking if I ignore her then she",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be left alone [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "she'll get the hint",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] smart [xIntent] none [xWant] to be correct [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I can definitely understand wanting to avoid a confrontation.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] You are correct. [str] manipulated, controlled, wakes, played, upto [aff] Angry"
+                },
+                {
+                    "text": "Yeah, I realize she's quite selfish so confronting her wouldn't help.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be left alone [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "What do you think you can do to minimize your contact with her?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] It's selfish- think of all the people who care about you. [str] deserve, hurt, badly, human, dead [aff] Sad"
+                },
+                {
+                    "text": "Just not respond to her messages and avoid the areas she's in",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] upset [xIntent] to avoid [xWant] to avoid [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "That sounds like a good plan.",
+                    "speaker": "sys",
+                    "strategy": "Affirmation and Reassurance",
+                    "heal": "[resp] to care for yourself. [str] 13f, 27f, subs, purely, abandoned [aff] Angry"
+                },
+                {
+                    "text": "Is that ghosting?",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be successful [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "What one person calls ghosting, someone else can call looking out for yourself.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] To get help. [str] purpose, change, gets, future, offer [aff] Hopeful"
+                },
+                {
+                    "text": "It sounds like she knows why you're upset with her and would be able to understand why you're choosing not to talk to her.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] To get help. [str] purpose, change, gets, future, offer [aff] Hopeful"
+                },
+                {
+                    "text": "If she's not interested in listening to you or thinking about what she's done, then you need to be doing what is best for you in cutting her out.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] To get help. [str] purpose, change, gets, future, offer [aff] Hopeful"
+                }
+            ]
+        },
+{
+            "emotion_type": "fear",
+            "problem_type": "ongoing depression",
+            "situation": "I'm fearful of where I'll be living in the future.",
+            "dialog": [
+                {
+                    "text": "I've tried this before and there wasn't anyone on the support side...",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be successful [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I also tried to be the supporter but I think the screen froze at some point. I couldn't complete that side. So, I'm trying this again. Not sure if I got credit for the others.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to try again [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Hoping I won't be punished with a rejection for talking to myself.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] ashamed [xIntent] none [xWant] to be heard [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Hello how are you? I am here to support you.",
+                    "speaker": "sys",
+                    "strategy": "Restatement or Paraphrasing",
+                    "heal": "[resp] Listen, I know how you feel. [str] sadness, fine, sad, normal, angry [aff] Ashamed"
+                },
+                {
+                    "text": "Oh, hi! Thank you.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be polite [xWant] to say hello [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I was just talking to myself. lol No one showed up the last few times I tried to do this.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] to be alone [xWant] to apologize [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "How can I help support you today?",
+                    "speaker": "sys",
+                    "strategy": "Question",
+                    "heal": "[resp] I'm sorry, you're hurting. [str] loves, alien, loosing, idiot, husband [aff] Sad"
+                },
+                {
+                    "text": "I know these are tough times and we all need to be heard.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] I'm sorry, you're hurting. [str] loves, alien, loosing, idiot, husband [aff] Sad"
+                },
+                {
+                    "text": "I'm just looking for someone new to talk to. I don't really feel like I can express my actual feelings in my current living arrangement.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be understood [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I understand. I have had to stay by myself for most of the year due to the pandemic. That has been hard.",
+                    "speaker": "sys",
+                    "strategy": "Self-disclosure",
+                    "heal": "[resp] Listening. [str] anger, angry, control, rage, rid [aff] Sad"
+                },
+                {
+                    "text": "I've heard the pandemic has affected a lot of people. I'm always alone anyway...or with my roommate,so I haven't noticed much of a difference.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] confused [xIntent] none [xWant] to ask for help [xNeed] none [xEffect] "
+                },
+                {
+                    "text": "It's difficult when we have absolutely nothing in common.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to be alone [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Have you tried different games that help you get to know each other? Maybe try a movie or series. I loved Sweet Magnolia's on Netflix.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] But the minute I am alone I feel like nothing. [str] purpose, change, gets, future, offer [aff] Sad"
+                },
+                {
+                    "text": "I'm mainly worried that she'll throw me out of the house and I'll have no where to live.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] sad [xIntent] none [xWant] to go home [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Oh god forbid we watch a movie. She's too obsessed with CNN to watch anything else.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] annoyed [xIntent] to be entertained [xWant] to watch something else [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "She's become brainwashed by the tabloid media...",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] confused [xIntent] none [xWant] to get out of the situation [xNeed] none [xEffect] gets into trouble"
+                },
+                {
+                    "text": "Oh my goodness. The good thing is there is a moratorium on evictions so she would not be able to do that legally. CNN can be overwhelming. Try giving her some type of distraction. Suggest yoga or some type of bonding.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] I am sorry that you are in the situation that you are in. [str] radio, lovers, rescued, chaotic, replace [aff] Angry"
+                },
+                {
+                    "text": "I think 24/7 news is problematic but here to stay.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] I am sorry that you are in the situation that you are in. [str] radio, lovers, rescued, chaotic, replace [aff] Angry"
+                },
+                {
+                    "text": "I actually do yoga every evening. She hates it. I'm living in her home without a lease, so I wonder if she can just tell me to leave.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] relieved [xIntent] to be alone [xWant] go home [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I can't imagine why anyone would want to watch the news for more than to just catch up (If you like lies and nonsense)",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy ) [xIntent] none [xWant] to be honest ) [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "As long as you have property there she would have to formally evict you. That is the good news.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] Anyway, me personally. [str] deserves, message, joy, regret, yes [aff] Joyful"
+                },
+                {
+                    "text": "That is good news. Thanks for letting me know that.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be nice [xWant] to celebrate [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "I think it is best to stick with a short local news report.",
+                    "speaker": "sys",
+                    "strategy": "Others",
+                    "heal": "[resp] to care for yourself. [str] resolution, resolutions, new, tomorrow, peace [aff] Excited"
+                },
+                {
+                    "text": "My pleasure. So many people are worried about losing their place to stay but thankfully most are protected due to the pandemic.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] to care for yourself. [str] resolution, resolutions, new, tomorrow, peace [aff] Excited"
+                },
+                {
+                    "text": "I just found mturk. I just started here. Any advice as to what to do? I've mainly just been doing surveys. I'm not good at the small tasks.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] none [xIntent] none [xWant] to get a raise [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Check Youtube videos on using Panda's. It will help you make more money. I have done over 750,000 hits.",
+                    "speaker": "sys",
+                    "strategy": "Information",
+                    "heal": "[resp] To get help. [str] motivation, enjoyment, laziness, reposting, tough [aff] Hopeful"
+                },
+                {
+                    "text": "Oh wow, that's amazing! I've done this particular hit 3 times...I've only found a person once though. I will definitely check out the videos. thank you!",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be helpful [xWant] to be happy [xNeed] to be a good listener [xEffect] none"
+                },
+                {
+                    "text": "What are pandas? Or is it too hard to explain?",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] frustrated [xIntent] none [xWant] to explain [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "You are welcome. Panda's help you keep grabbing hits. You can store 25 at a time.",
+                    "speaker": "sys",
+                    "strategy": "Providing Suggestions",
+                    "heal": "[resp] Best wishes, [str] pictures, dogs, dog, sending, thread [aff] Annoyed"
+                },
+                {
+                    "text": "Oh, I see. Great! Thanks so much for chatting with me and for the advice.",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be friends [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "It's been nice to have someone new to vent to. :)",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] to be happy [xWant] to be friends with someone else [xNeed] none [xEffect] none"
+                },
+                {
+                    "text": "Have a great night and take care of yourself. It has been a pleasure.",
+                    "speaker": "sys",
+                    "strategy": "Reflection of feelings",
+                    "heal": "[resp] To make friends. [str] honest, vent, giving, miserable, kinda [aff] Devastated"
+                },
+                {
+                    "text": "Thank you, you too!",
+                    "speaker": "usr",
+                    "knowledge": "[xReact] happy [xIntent] none [xWant] to be a good friend [xNeed] none [xEffect] none"
+                }
+            ]
+        }
+    ]
+}

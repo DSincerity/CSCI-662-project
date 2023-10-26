@@ -38,10 +38,8 @@ echo ""
 echo "Running Baseline Experiment"
 echo ""
 
-# wandb
-export WANDB_API_KEY="b8f20a9275faafc50952d9284bd18389158ea97d"
-export WANDB_LOG_MODEL=false
-export WANDB_PROJECT="CSCI-project"
+# wandb information
+source "$PWD/_wandb.sh"
 
 
 job_id=$SLURM_JOB_ID

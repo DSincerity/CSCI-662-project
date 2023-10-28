@@ -44,8 +44,7 @@ source "$PWD/_wandb.sh"
 
 job_id=$SLURM_JOB_ID
 experiment_nm=${job_id}.${SLURM_JOB_NAME}
-python -m torch.distributed.launch --nproc_per_node 1 \
-    infer.py \
+python infer.py \
     --config_name strat \
     --inputter_name strat \
     --data_name esconv \

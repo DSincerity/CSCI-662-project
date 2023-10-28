@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=FT-Blenderbot-Small-ESCOV
+#SBATCH --job-name=Infer-FT-Blenderbot-Small-ESCOV
 #SBATCH --nodes=1
 #SBATCH --account=glucas_540
 #SBATCH --partition=gpu
@@ -45,23 +45,27 @@ source "$PWD/_wandb.sh"
 job_id=$SLURM_JOB_ID
 experiment_nm=${job_id}.${SLURM_JOB_NAME}
 python -m torch.distributed.launch --nproc_per_node 1 \
-    train.py \
+    infer.py \
     --config_name strat \
     --inputter_name strat \
     --data_name esconv \
     --knowledge_name sbert \
-    --eval_input_file ./_reformat/ \
+    --add_nlg_eval \
+    --add_mi_analysis \
     --seed 13 \
+    --load_checkpoint ./DATA/strat.strat.esconv.sbert/2023-10-25022042.3e-05.16.1gpu/epoch-2.bin \
+    --fp16 false \
     --max_input_length 256 \
     --max_decoder_input_length 40 \
-    --train_batch_size 16 \
-    --gradient_accumulation_steps 1 \
-    --eval_batch_size 16 \
-    --learning_rate 3e-5 \
-    --num_epochs 6 \
-    --warmup_steps 100 \
-    --fp16 false \
-    --loss_scale 0.0 \
-    --pbar true
+    --max_length 40 \
+    --min_length 15 \
+    --infer_batch_size 2 \
+    --infer_input_file ./_reformat/ \
+    --temperature 0.7 \
+    --top_k 30 \
+    --top_p 0.3 \
+    --num_beams 1 \
+    --repetition_penalty 1 \
+    --no_repeat_ngram_size 3
 
 echo "DONE"

@@ -88,35 +88,10 @@ class Model(BaseModel, BlenderbotSmallForConditionalGeneration):
             assert not self.training
             return loss, label_size
 
-    def predict_strategy(self, logits, data_name, knowledge_name, encoded_info):
+    def predict_strategy(self, logits, encoded_info):
         assert not self.training
         strat_id = encoded_info.get('strat_id', None)
-        if knowledge_name == 'none':
-            if data_name == 'esconv':
-                logits = logits[:, 0, -8:]
-            elif data_name == 'mi':
-                logits = logits[:, 0, -10:]
-        elif knowledge_name == 'basic':
-            if data_name == 'esconv':
-                logits = logits[:, 0, -13:-5]
-            elif data_name == 'mi':
-                logits = logits[:, 0, -15:-5]
-        elif knowledge_name == 'bm25':
-            if data_name == 'esconv':
-                logits = logits[:, 0, -9:-1]
-            elif data_name == 'mi':
-                logits = logits[:, 0, -11:-1]
-        elif knowledge_name == 'oracle':
-            if data_name == 'esconv':
-                logits = logits[:, 0, -14:-6]
-            elif data_name == 'mi':
-                logits = logits[:, 0, -16:-6]
-        elif knowledge_name in ['sbert','graph']:
-            if data_name == 'esconv':
-                logits = logits[:, 0, -16:-8]
-            elif data_name == 'mi':
-                logits = logits[:, 0, -18:-8]
-
+        logits = logits[:, 0, -8:]
     
         if strat_id is not None:
             pred = strat_id
@@ -140,8 +115,6 @@ class Model(BaseModel, BlenderbotSmallForConditionalGeneration):
     @torch.no_grad()
     def generate(
         self,
-        data_name,
-        knowledge_name,
         input_ids=None,
         attention_mask=None,
         decoder_input_ids=None,
@@ -168,33 +141,9 @@ class Model(BaseModel, BlenderbotSmallForConditionalGeneration):
             return_dict=return_dict,
         )
         lm_logits = self.lm_head(decoder_outputs.last_hidden_state) + self.final_logits_bias
-        self.predict_strategy(lm_logits, data_name, knowledge_name, encoded_info)
+        self.predict_strategy(lm_logits, encoded_info)
         
-        if knowledge_name == 'none':
-            if data_name == 'esconv':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 8], dim=-1)
-            elif data_name == 'mi':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 10], dim=-1)
-        elif knowledge_name == 'basic':
-            if data_name == 'esconv':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 13], dim=-1)
-            elif data_name == 'mi':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 15], dim=-1)
-        elif knowledge_name == 'bm25':
-            if data_name == 'esconv':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 9], dim=-1)
-            elif data_name == 'mi':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 11], dim=-1)
-        elif knowledge_name == 'oracle':
-            if data_name == 'esconv':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 14], dim=-1)
-            elif data_name == 'mi':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 16], dim=-1)
-        elif knowledge_name in ['sbert','graph']:
-            if data_name == 'esconv':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 16], dim=-1)
-            elif data_name == 'mi':
-                decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 18], dim=-1)
+        decoder_input_ids = torch.cat([decoder_input_ids, encoded_info['pred_strat_id'][..., None] + len(self.toker) - 8], dim=-1)
         
         assert 'max_length' in kwargs
         kwargs['max_length'] = kwargs['max_length'] + decoder_input_ids.size(1)

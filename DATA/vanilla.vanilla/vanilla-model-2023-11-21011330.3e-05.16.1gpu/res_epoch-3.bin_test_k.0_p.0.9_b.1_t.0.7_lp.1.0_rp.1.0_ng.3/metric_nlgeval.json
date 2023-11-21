@@ -1,0 +1,12 @@
+{
+  "Bleu_1": 0.17227473090396409,
+  "Bleu_2": 0.066556234224867,
+  "Bleu_3": 0.034260591708632146,
+  "Bleu_4": 0.020220345934823303,
+  "CIDEr": 0.14880024792640656,
+  "EmbeddingAverageCosineSimilarity": 0.895046,
+  "GreedyMatchingScore": 0.702549,
+  "METEOR": 0.07115117202489585,
+  "ROUGE_L": 0.16137610664186808,
+  "VectorExtremaCosineSimilarity": 0.50482
+}

@@ -54,11 +54,10 @@ class InputFeatures(object):
 
 def featurize(
     bos, eos,
-    context, knowledge, max_input_length,
+    context, max_input_length,
     response, max_decoder_input_length, strat_id,
 ):
     context = [c + [eos] for c in context]
-    context += [knowledge + [eos]]
     input_ids = sum(context, [])[:-1]
     input_ids = input_ids[-max_input_length:]
     
@@ -73,74 +72,35 @@ def featurize(
     )
 
 
-def convert_data_to_inputs(data, data_name, knowledge_name, toker: PreTrainedTokenizer, **kwargs):
+def convert_data_to_inputs(data, toker: PreTrainedTokenizer, **kwargs):
     process = lambda x: toker.convert_tokens_to_ids(toker.tokenize(x))
     
-    if data_name == 'esconv':
-        dialog = data['dialog']
-        inputs = []
-        context = []
-        knowledge = []
+    dialog = data['dialog']
+    inputs = []
+    context = []
+    
+    for i in range(len(dialog)):
+        text = _norm(dialog[i]['text'])
+        text = process(text)
         
-        for i in range(len(dialog)):
-            text = _norm(dialog[i]['text'])
-            text = process(text)
+        if dialog[i]['speaker'] == 'sys':
+            strat_id = process('[' + dialog[i]['strategy'] + ']')
+            assert len(strat_id) == 1
+            strat_id = strat_id[0]
+        
+        if i > 0 and dialog[i]['speaker'] == 'sys':
+            res = {
+                'context': context.copy(),
+                'response': text,
+                'strat_id': strat_id,
+            }
             
-            if dialog[i]['speaker'] == 'sys':
-                strat_id = process('[' + dialog[i]['strategy'] + ']')
-                assert len(strat_id) == 1
-                strat_id = strat_id[0]
-                
-                if knowledge_name == 'oracle':
-                    heal = process('[knowledge]') + process(dialog[i]['heal'])
-                elif knowledge_name in ['sbert','graph']:
-                    heal = process(dialog[i]['heal'])
-                else:
-                    heal = []
-                    
-            else:
-                if knowledge_name in ['basic','oracle','sbert','graph']:
-                    knowledge = process(dialog[i]['knowledge'])
-                elif knowledge_name == 'bm25':
-                    knowledge = process('[knowledge]') + process(dialog[i]['knowledge'])
-                else:
-                    knowledge = []
-            
-            if i > 0 and dialog[i]['speaker'] == 'sys':
-                
-                res = {
-                    'context': context.copy(),
-                    'knowledge': knowledge + heal,
-                    'response': text,
-                    'strat_id': strat_id,
-                }
-                
-                inputs.append(res)
+            inputs.append(res)
 
-            #if dialog[i]['speaker'] == 'sys':
-            #    text = [strat_id] + text
+        if dialog[i]['speaker'] == 'sys':
+            text = [strat_id] + text
 
-            context = context + [text]
-    elif data_name == 'mi':
-        strat_id = process('[' + data['strategy'] + ']')
-        assert len(strat_id) == 1
-        strat_id = strat_id[0]
-        if knowledge_name == 'basic':
-            knowledge = process(data['knowledge'])
-        elif knowledge_name == 'bm25':
-            knowledge = process('[knowledge]')+process(data['knowledge'])
-        elif knowledge_name in ['sbert','graph']:
-            knowledge = process(data['knowledge']) + process(data['heal'])
-        else:
-            knowledge = []
-        inputs = [{
-            'context': [process(text) for text in data['dialog']], 
-            'knowledge': knowledge,
-            'response': process(data['target']), 
-            'strat_id': strat_id
-            }]
-    else:
-        raise ValueError('Invalid data name.')
+        context = context + [text]
 
     return inputs
 
@@ -172,7 +132,7 @@ def convert_inputs_to_features(inputs, toker, **kwargs):
         ipt = inputs[i]
         feat = featurize(
             bos, eos,
-            ipt['context'], ipt['knowledge'], max_input_length,
+            ipt['context'], max_input_length,
             ipt['response'], max_decoder_input_length, ipt['strat_id'],
         )
         features.append(feat)
@@ -191,7 +151,7 @@ class FeatureDataset(Dataset):
         return len(self.features)
 
     @staticmethod
-    def collate(features: List[InputFeatures], toker: PreTrainedTokenizer, data_name: str, knowledge_name: str, infer=False):
+    def collate(features: List[InputFeatures], toker: PreTrainedTokenizer, infer=False):
         pad = toker.pad_token_id
         if pad is None:
             pad = toker.eos_token_id
@@ -220,19 +180,7 @@ class FeatureDataset(Dataset):
             decoder_input_ids = torch.tensor([[f.decoder_input_ids[0]] for f in features], dtype=torch.long)
             labels = None
         
-        if data_name == 'esconv':
-            strat_id = torch.tensor([f.labels[0] for f in features], dtype=torch.long) - len(toker) + 8
-        elif data_name == 'mi':
-            strat_id = torch.tensor([f.labels[0] for f in features], dtype=torch.long) - len(toker) + 10
-        
-        if knowledge_name == 'basic':
-            strat_id += 5
-        elif knowledge_name == 'bm25':
-            strat_id += 1
-        elif knowledge_name == 'oracle':
-            strat_id += 6
-        elif knowledge_name in ['sbert','graph']:
-            strat_id += 8
+        strat_id = torch.tensor([f.labels[0] for f in features], dtype=torch.long) - len(toker) + 8
         
         res = {
             'input_ids': input_ids,
@@ -251,12 +199,10 @@ class FeatureDataset(Dataset):
 # for validation
 class DynamicBatchingLoader(object):
     """ this loader takes raw text file, used for validate perplexity """
-    def __init__(self, corpus_file, toker, batch_size, data_name, knowledge_name, **kwargs):
+    def __init__(self, corpus_file, toker, batch_size, **kwargs):
         self.corpus = corpus_file
         self.toker = toker
         self.bs = batch_size
-        self.data_name = data_name
-        self.knowledge_name = knowledge_name
         self.num_examples = self.get_len(corpus_file)
         self.kwargs = kwargs
 
@@ -279,7 +225,7 @@ class DynamicBatchingLoader(object):
             features = []
             for line in tqdm.tqdm(reader, total=len(reader), desc=f"validating"):
                 data = json.loads(line)
-                inputs = convert_data_to_inputs(data, self.data_name, self.knowledge_name, self.toker, **self.kwargs)
+                inputs = convert_data_to_inputs(data, self.toker, **self.kwargs)
                 features.extend(convert_inputs_to_features(inputs, self.toker, **self.kwargs))
                 if len(features) >= self.bs:
                     batch = self._batch_feature(features)
@@ -294,20 +240,17 @@ class DynamicBatchingLoader(object):
             pass
     
     def _batch_feature(self, features):
-        return FeatureDataset.collate(features, self.toker, self.data_name, self.knowledge_name)
+        return FeatureDataset.collate(features, self.toker)
 
     def get_len(self, corpus):
         with open(corpus, 'r', encoding="utf-8") as file:
             reader = [json.loads(line) for line in file]
-        if self.data_name == 'esconv':
-            return sum(map(lambda x: len(list(filter(lambda y: y['speaker'] == 'sys', x['dialog'][1:]))), reader))
-        elif self.data_name == 'mi':
-            return len(reader)
+        return sum(map(lambda x: len(list(filter(lambda y: y['speaker'] == 'sys', x['dialog'][1:]))), reader))
 
 
 # for inference
-def prepare_infer_batch(features, toker, data_name, knowledge_name, interact=None):
-    res = FeatureDataset.collate(features, toker, data_name, knowledge_name, True)
+def prepare_infer_batch(features, toker, interact=None):
+    res = FeatureDataset.collate(features, toker, True)
     
     res['batch_size'] = res['input_ids'].size(0)
 
@@ -324,7 +267,7 @@ def prepare_infer_batch(features, toker, data_name, knowledge_name, interact=Non
     return res
 
 
-def get_infer_batch(infer_input_file, toker, data_name, knowledge_name, **kwargs):
+def get_infer_batch(infer_input_file, toker, **kwargs):
     assert 'infer_batch_size' in kwargs, 'you should give infer_batch_size'
     infer_batch_size = kwargs.get('infer_batch_size')
 
@@ -337,7 +280,7 @@ def get_infer_batch(infer_input_file, toker, data_name, knowledge_name, **kwargs
     references = []
     for sample_id, line in tqdm.tqdm(enumerate(reader), total=len(reader), desc=f"inferring"):
         data = json.loads(line)
-        inputs = convert_data_to_inputs(data, data_name, knowledge_name, toker, **kwargs)
+        inputs = convert_data_to_inputs(data, toker, **kwargs)
         tmp_features = convert_inputs_to_features(inputs, toker, **kwargs)
         for i in range(len(inputs)):
             features.append(tmp_features[i])
@@ -347,11 +290,11 @@ def get_infer_batch(infer_input_file, toker, data_name, knowledge_name, **kwargs
             sample_ids.append(sample_id)
     
             if len(sample_ids) == infer_batch_size:
-                yield prepare_infer_batch(features, toker, data_name, knowledge_name), posts, references, sample_ids
+                yield prepare_infer_batch(features, toker), posts, references, sample_ids
                 features = []
                 sample_ids = []
                 posts = []
                 references = []
 
     if len(sample_ids) > 0:
-        yield prepare_infer_batch(features, toker, data_name, knowledge_name), posts, references, sample_ids
+        yield prepare_infer_batch(features, toker), posts, references, sample_ids

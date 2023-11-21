@@ -71,34 +71,26 @@ def featurize(
     )
 
 
-def convert_data_to_inputs(data, data_name, toker: PreTrainedTokenizer, **kwargs):
+def convert_data_to_inputs(data, toker: PreTrainedTokenizer, **kwargs):
     process = lambda x: toker.convert_tokens_to_ids(toker.tokenize(x))
     
-    if data_name == 'esconv':
-        dialog = data['dialog']
-        inputs = []
-        context = []
+    dialog = data['dialog']
+    inputs = []
+    context = []
+    
+    for i in range(len(dialog)):
+        text = _norm(dialog[i]['text'])
+        text = process(text)
         
-        for i in range(len(dialog)):
-            text = _norm(dialog[i]['text'])
-            text = process(text)
+        if i > 0 and dialog[i]['speaker'] == 'sys':
+            res = {
+                'context': context.copy(),
+                'response': text,
+            }
             
-            if i > 0 and dialog[i]['speaker'] == 'sys':
-                res = {
-                    'context': context.copy(),
-                    'response': text,
-                }
-                
-                inputs.append(res)
+            inputs.append(res)
 
-            context = context + [text]
-    elif data_name == 'mi':
-        inputs = [{
-            'context': [process(text) for text in data['dialog']], 
-            'response': process(data['target'])
-            }]
-    else:
-        raise ValueError('Invalid data name.')
+        context = context + [text]
 
     return inputs
 

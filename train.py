@@ -39,8 +39,6 @@ CACHE_EMPTY_STEP = 10000
 parser = argparse.ArgumentParser()
 parser.add_argument('--config_name', type=str, required=True)
 parser.add_argument('--inputter_name', type=str, required=True)
-parser.add_argument('--data_name', type=str, required=True)
-parser.add_argument('--knowledge_name', type=str, default=None)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--load_checkpoint", '-c', type=str, default=None)
 
@@ -59,7 +57,7 @@ parser.add_argument("--gradient_accumulation_steps", type=int, default=1,
                          "and reduce synchronization")
 parser.add_argument("--eval_batch_size", type=int, default=16)
 parser.add_argument("--learning_rate", type=float, default=1e-5)
-parser.add_argument("--warmup_steps", type=int, default=400)
+parser.add_argument("--warmup_steps", type=int, default=16000)
 
 parser.add_argument("--num_optim_steps", type=int, default=20000,
                     help="new API specifies num update steps")
@@ -156,8 +154,6 @@ if args.local_rank == -1 or get_rank() == 0:
 names = {
     'inputter_name': args.inputter_name,
     'config_name': args.config_name,
-    'data_name': args.data_name,
-    'knowledge_name': args.knowledge_name,
 }
 
 toker = build_model(only_toker=True, local_rank=args.local_rank, **names)
@@ -191,13 +187,10 @@ dataloader_kwargs = {
     'label_num': args.label_num,
     'only_encode': args.only_encode,
 }
-args.eval_input_file += (args.data_name + '/' + args.knowledge_name + '/valid.txt')
 eval_dataloader_loss = inputter.valid_dataloader(
     toker=toker,
     corpus_file=args.eval_input_file,
     batch_size=args.eval_batch_size,
-    data_name=args.data_name,
-    knowledge_name=args.knowledge_name,
     **dataloader_kwargs
 )
 
@@ -241,7 +234,7 @@ if args.fp16:
 ##########################################################################
 
 timestamp = datetime.datetime.now().strftime('%Y-%m-%d%H%M%S')
-output_dir = join(f'./DATA/{args.inputter_name}.{args.config_name}.{args.data_name}.{args.knowledge_name}',
+output_dir = join(f'./DATA/{args.inputter_name}.{args.config_name}',
                   f'{timestamp}.{args.learning_rate}.{args.train_batch_size}.{n_gpu}gpu')
 if args.local_rank == -1 or get_rank() == 0:
     os.makedirs(output_dir, exist_ok=True)

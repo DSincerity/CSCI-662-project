@@ -8,14 +8,13 @@ import os
 import nltk
 import numpy as np
 import torch
-from sklearn.metrics import classification_report, f1_score, confusion_matrix, precision_score, recall_score
+from sklearn.metrics import classification_report, f1_score, confusion_matrix
 from torch import Tensor
 from transformers.trainer_utils import set_seed
 
 from inputters import inputters
 from inputters.inputter_utils import _norm
 from metric.myMetrics import Metric
-from metric.metric_utils import mi_metric
 from utils.building_utils import boolean_string, build_model, deploy_model
 from utils.eval_utils import eval_model_loss
 
@@ -42,8 +41,6 @@ def cut_seq_to_eos(sentence, eos, remove_id=None):
 parser = argparse.ArgumentParser()
 parser.add_argument('--config_name', type=str, required=True)
 parser.add_argument('--inputter_name', type=str, required=True)
-parser.add_argument('--data_name', type=str, required=True)
-parser.add_argument('--knowledge_name', type=str, default=None)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--load_checkpoint", '-c', type=str, default=None)
 
@@ -59,7 +56,6 @@ parser.add_argument('--only_encode', action='store_true', help='only do encoding
 parser.add_argument('--only_generate', action='store_true', help='do not conduct evaluations')
 parser.add_argument('--chinese', action='store_true', help='chinese language')
 parser.add_argument('--add_nlg_eval', action='store_true', help='add nlg-eval')
-parser.add_argument('--add_mi_analysis', action='store_true', help='add mixed initiative analysis')
 
 parser.add_argument("--min_length", type=int, default=5)
 parser.add_argument("--max_length", type=int, default=50)
@@ -97,8 +93,6 @@ for a in args_dict:
 names = {
     'inputter_name': args.inputter_name,
     'config_name': args.config_name,
-    'data_name': args.data_name,
-    'knowledge_name': args.knowledge_name,
 }
 
 toker, model = build_model(checkpoint=args.load_checkpoint, **names)
@@ -160,12 +154,9 @@ print(json.dumps(generation_kwargs, indent=2, ensure_ascii=False))
 
 for infer_idx, infer_input_file in enumerate(args.infer_input_file):
     set_seed(args.seed)
-    infer_input_file += (args.data_name + '/' + args.knowledge_name + '/test.txt')
     infer_dataloader = inputter.infer_dataloader(
         infer_input_file,
         toker,
-        args.data_name,
-        args.knowledge_name,
         **dataloader_kwargs
     )
     metric_res = {}
@@ -174,8 +165,6 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
             corpus_file=infer_input_file,
             toker=toker,
             batch_size=args.infer_batch_size,
-            data_name=args.data_name,
-            knowledge_name=args.knowledge_name,
             **dataloader_kwargs
         )
         infer_loss, _, infer_samples, pointwise_loss, pointwise_sample = eval_model_loss(
@@ -199,7 +188,7 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
     for batch, posts, references, sample_ids in infer_dataloader:
         batch = {k: v.to(device) if isinstance(v, Tensor) else v for k, v in batch.items()}
         batch.update(generation_kwargs)
-        encoded_info, generations = model.generate(data_name=args.data_name, knowledge_name=args.knowledge_name, **batch)
+        encoded_info, generations = model.generate(**batch)
         
         batch_other_res = None
         if 'other_res' in batch:
@@ -350,10 +339,6 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                 metric_res[f'acc_{k}'] = np.mean(kk == vv)
                 metric_res[f'f1_micro_{k}'] = f1_score(kk, vv, average='micro')
                 metric_res[f'f1_macro_{k}'] = f1_score(kk, vv, average='macro')
-                metric_res[f'p_micro_{k}'] = precision_score(kk, vv, average='micro')
-                metric_res[f'p_macro_{k}'] = precision_score(kk, vv, average='macro')
-                metric_res[f'r_micro_{k}'] = recall_score(kk, vv, average='micro')
-                metric_res[f'r_macro_{k}'] = recall_score(kk, vv, average='macro')
                 if metric_res_list is None:
                     metric_res_list = {}
                 metric_res_list[f'acc_{k}'] = (kk == vv).astype(int).tolist()
@@ -403,8 +388,3 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
             json.dump(metric_res_list, f, ensure_ascii=False)
 
 
-    if args.add_mi_analysis:
-        mi_res = mi_metric(infer_input_file, os.path.join(save_dir, f'gen.json'), os.path.join(save_dir, f'mi_gen.json'))
-
-        with open(os.path.join(save_dir, f'mixed_initiative_metrics.json'), 'w') as f:
-            json.dump(mi_res, f, indent=2)

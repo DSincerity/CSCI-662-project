@@ -1,2 +1,2 @@
 
-GOLDEN_TRUTH = False
+GOLDEN_TRUTH = True

@@ -22,8 +22,6 @@ def boolean_string(s):
 def build_model(only_toker=False, checkpoint=None, local_rank=-1, **kwargs):
     assert 'config_name' in kwargs
     config_name = kwargs.pop('config_name')
-    data_name = kwargs.pop('data_name')
-    knowledge_name = kwargs.pop('knowledge_name')
     
     if not os.path.exists(f'./CONFIG/{config_name}.json'):
         raise ValueError
@@ -37,10 +35,7 @@ def build_model(only_toker=False, checkpoint=None, local_rank=-1, **kwargs):
     
     if only_toker:
         if 'expanded_vocab' in config:
-            expanded_vocab = config['expanded_vocab'][data_name]
-            if knowledge_name != 'none':
-                expanded_vocab += config['expanded_vocab'][knowledge_name]
-            toker.add_tokens(expanded_vocab, special_tokens=True)
+            toker.add_tokens(config['expanded_vocab'], special_tokens=True)
         return toker
     
     Model = models[config['model_name']]
@@ -52,10 +47,7 @@ def build_model(only_toker=False, checkpoint=None, local_rank=-1, **kwargs):
         setattr(model.config, 'gradient_checkpointing', config['gradient_checkpointing'])
     
     if 'expanded_vocab' in config:
-        expanded_vocab = config['expanded_vocab'][data_name]
-        if knowledge_name != 'none':
-            expanded_vocab += config['expanded_vocab'][knowledge_name]
-        toker.add_tokens(expanded_vocab, special_tokens=True)
+        toker.add_tokens(config['expanded_vocab'], special_tokens=True)
     model.tie_tokenizer(toker)
     
     if checkpoint is not None:

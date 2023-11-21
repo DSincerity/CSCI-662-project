@@ -15,7 +15,7 @@ with open(file_path, "r") as f:
     lines = f.readlines()
     data = [json.loads(i) for i in lines]
 
-def generate_comet_knowledge(text):
+def generate_heal_knowledge(text):
     try:
         response = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
@@ -70,7 +70,7 @@ def generate_comet_knowledge(text):
         )
     return response.choices[0].message.content
 
-def generate_heal_knowledge(text):
+def generate_comet_knowledge(text):
     try:
         response = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
@@ -130,7 +130,7 @@ with open(output_file, "a") as f:
     for index, dialogue in enumerate(tqdm(data)):
         for index_utter, utterance in enumerate(tqdm(dialogue["dialog"])):
             if utterance["speaker"] == "usr":
-                utterance["knowledge"] = generate_comet_knowledge(utterance["text"])
+                utterance["knowledge_augmented"] = generate_comet_knowledge(utterance["text"])
             elif utterance["speaker"] == "sys":
-                utterance["knowledge"] = generate_heal_knowledge(utterance["text"])
+                utterance["knowledge_augmented"] = generate_heal_knowledge(utterance["text"])
         f.write(json.dumps(dialogue) + "\n")

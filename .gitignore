@@ -1,2 +1,8 @@
 *.pt
 *.pyc
+DATA
+Blenderbot_small-90M/*
+_reformat/AugESC
+metric/model/*
+slog
+wordvector

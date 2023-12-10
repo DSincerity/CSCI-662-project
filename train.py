@@ -50,7 +50,8 @@ parser.add_argument("--max_knowledge_len", type=int, default=None)
 parser.add_argument('--label_num', type=int, default=None)
 parser.add_argument('--only_encode', action='store_true', help='only do encoding')
 
-parser.add_argument("--eval_input_file", type=str)
+parser.add_argument("--eval_input_file", type=str, default=None)
+parser.add_argument("--train_data_path", type=str, default=None)
 
 parser.add_argument("--train_batch_size", type=int, default=8,
                     help="batch size now means per GPU per step")
@@ -158,6 +159,7 @@ names = {
     'config_name': args.config_name,
     'data_name': args.data_name,
     'knowledge_name': args.knowledge_name,
+    'train_data_path': args.train_data_path,
 }
 
 toker = build_model(only_toker=True, local_rank=args.local_rank, **names)
@@ -191,7 +193,9 @@ dataloader_kwargs = {
     'label_num': args.label_num,
     'only_encode': args.only_encode,
 }
-args.eval_input_file += (args.data_name + '/' + args.knowledge_name + '/valid.txt')
+if args.eval_input_file is None:
+    args.eval_input_file = os.path.join("./_reformat/", args.data_name, args.knowledge_name, 'valid.txt')  # unremark for abalation
+    print(f"eval_input_file is None, set eval_input_file -> {args.eval_input_file}")
 eval_dataloader_loss = inputter.valid_dataloader(
     toker=toker,
     corpus_file=args.eval_input_file,
@@ -241,8 +245,11 @@ if args.fp16:
 ##########################################################################
 
 timestamp = datetime.datetime.now().strftime('%Y-%m-%d%H%M%S')
-output_dir = join(f'./DATA/{args.inputter_name}.{args.config_name}.{args.data_name}.{args.knowledge_name}',
-                  f'{timestamp}.{args.learning_rate}.{args.train_batch_size}.{n_gpu}gpu')
+if args.train_data_path is None:
+    output_dir = join(f'./DATA/{args.inputter_name}.{args.config_name}.{args.data_name}.{args.knowledge_name}',
+                    f'{timestamp}.{args.learning_rate}.{args.train_batch_size}.{n_gpu}gpu')
+else:
+    output_dir = join(os.path.dirname(args.train_data_path), f'{timestamp}.{args.learning_rate}.{args.train_batch_size}.{n_gpu}gpu')
 if args.local_rank == -1 or get_rank() == 0:
     os.makedirs(output_dir, exist_ok=True)
     with open(join(output_dir, 'args.json'), 'w', encoding='utf-8') as f:
@@ -278,14 +285,15 @@ while True:
     for batch in train_dataloader:
         # activate new training mode
         batch = {k: v.to(device) if isinstance(v, Tensor) else v for k, v in batch.items()}
+        #print(batch)
         batch.update({'global_step': global_step})
         batch.update({'epoch': epoch})
         batch.update({'warmup_steps': args.warmup_steps})
         outputs = model(**batch)
-        
+
         loss = outputs.pop('all')
         ppl = outputs.pop('ppl')
-        
+
         if 'input_ids' in batch:
             input_ids = batch['input_ids']
         elif 'tgt_input_ids' in batch:
@@ -293,7 +301,7 @@ while True:
         else:
             assert 'src_input_ids' in batch
             input_ids = batch['src_input_ids']
-        
+
         if n_gpu > 1:
             loss = loss.mean()
             ppl = ppl.mean()
@@ -303,13 +311,13 @@ while True:
                 scaled_loss.backward()
         else:
             loss.backward()
-        
+
         tmp_loss = float(loss.item()) * (args.train_batch_size * args.gradient_accumulation_steps / input_ids.shape[0])
         tr_loss += tmp_loss
         nb_tr_examples += input_ids.size(0)
         nb_tr_steps += 1
         mean_loss = tr_loss / nb_tr_steps
-        
+
         if ppl.item() < INF:
             tmp_ppl = ppl.item()
         else:
@@ -332,7 +340,7 @@ while True:
                 grads = [p.grad.data for p in model.parameters()
                          if p.requires_grad and p.grad is not None]
                 all_reduce_and_rescale_tensors(grads, float(1))
-            
+
             optimizer.step()
             scheduler.step()
             optimizer.zero_grad()
@@ -358,13 +366,13 @@ while True:
                         else:
                             pbar_str += f"{k}: {v.item():.2f} "
                     pbar_str += f"ppl: {mean_ppl:.2f} epoch: {epoch}"
-                    
+
                     pbar.set_postfix_str(pbar_str)
                     if args.num_epochs is not None:
                         pbar.update(args.gradient_accumulation_steps)
                     else:
                         pbar.update(1)
-            
+
                 print(f'{epoch+1},{global_step+1},{step+1},{tmp_loss},{tmp_ppl},{mean_loss},{mean_ppl},'
                       f'{n_token_real_all_proc},{n_token_total_all_proc},{epoch_time}', file=train_logger)
 
@@ -372,7 +380,7 @@ while True:
                 if args.local_rank == -1 or get_rank() == 0:
                     # only rank 0 process evaluate
                     torch.save(model.state_dict(), join(output_dir, f'{global_step}.bin'))
-                    toker.save_vocabulary(output_dir)
+                    #toker.save_vocabulary(output_dir)
                     model.config.to_json_file(join(output_dir, f'config.json'))
 
                     eval_loss, eval_ppl, eval_samples, *_ = eval_model_loss(
@@ -386,20 +394,20 @@ while True:
                     logger.info('current learning rate: '
                                 + str(optimizer.param_groups[0]['lr']))
                     model.train()
-            
+
             if args.num_epochs is None and global_step >= args.num_optim_steps:
                 break
-        
+
         if (step+1) % CACHE_EMPTY_STEP == 0:
             torch.cuda.empty_cache()
-    
+
     if args.num_epochs is not None:
         if args.local_rank == -1 or get_rank() == 0:
             # only rank 0 process evaluate
             torch.save(model.state_dict(), join(output_dir, f'epoch-{epoch}.bin'))
-            toker.save_vocabulary(output_dir)
+            #toker.save_vocabulary(output_dir)
             model.config.to_json_file(join(output_dir, f'config.json'))
-    
+
             eval_loss, eval_ppl, eval_samples, *_ = eval_model_loss(
                 model=model,
                 eval_dataloader=eval_dataloader_loss,
@@ -414,7 +422,7 @@ while True:
 
     if args.num_epochs is None and global_step >= args.num_optim_steps:
         break
-    
+
     epoch += 1
     if args.num_epochs is not None and epoch == args.num_epochs:
         break

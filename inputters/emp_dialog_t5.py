@@ -194,16 +194,22 @@ class FeatureDataset(Dataset):
     @staticmethod
     def collate(features: List[InputFeatures], toker: PreTrainedTokenizer, data_name: str, knowledge_name: str, infer=False):
         #pad = toker.pad_token_id
+        #pad = toker.pad_token_id = toker.convert_tokens_to_ids(toker.pad_token)
+
         pad = toker.convert_tokens_to_ids(toker.pad_token)
         if pad is None:
             pad = toker.eos_token_id
             assert pad is not None, 'either pad_token_id or eos_token_id should be provided'
         #bos = toker.bos_token_id
+        #bos_token = '<extra_id_0>' # set bos token
+        #bos = toker.bos_token_id = toker.convert_tokens_to_ids(bos_token)
+
         bos = toker.convert_tokens_to_ids(toker.eos_token) # no bos token in t5 tokenizer
         if bos is None:
             bos = toker.cls_token_id
             assert bos is not None, 'either bos_token_id or cls_token_id should be provided'
         #eos = toker.eos_token_id
+        #eos = toker.eos_token_id = toker.convert_tokens_to_ids(toker.eos_token)
         eos = toker.convert_tokens_to_ids(toker.eos_token)
         if eos is None:
             eos = toker.sep_token_id

@@ -30,9 +30,12 @@ class Model(BaseModel, T5ForConditionalGeneration):
         **kwargs
     ):
         assert self.toker is not None
+        # print('input ids: ', input_ids)
+        # print(labels)
+        # print(kwargs)
 
         encoded_info = kwargs
-        assert (self.training or validation) == (labels is not None)
+        assert (self.training or validation) == (labels is not None), f"train {self.training}: \nlables: {labels}"
         if validation:
             labels[:, 0] = -100
 
@@ -41,7 +44,7 @@ class Model(BaseModel, T5ForConditionalGeneration):
             use_cache = True
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
-        outputs = self(
+        outputs = super().forward(
             input_ids,
             attention_mask=attention_mask,
             decoder_input_ids=decoder_input_ids,
@@ -50,10 +53,23 @@ class Model(BaseModel, T5ForConditionalGeneration):
             use_cache=use_cache,
             return_dict=return_dict,
         )
-        lm_logits = self.lm_head(outputs[0]) + self.final_logits_bias
+
+        lm_logits= outputs.logits
+        #loss = outputs.loss
+
+        #print(lm_logits)
+        #print(loss)
+        #lm_logits = self.lm_head(outputs) #+ self.final_logits_bias
 
         if validation:
             lm_logits = lm_logits[..., :self.toker.vocab_size].contiguous()
+
+        # if labels is not None:
+        #     loss_fct = CrossEntropyLoss(ignore_index=-100)
+        #     # move labels to correct device to enable PP
+        #     labels = labels.to(lm_logits.device)
+        #     loss = loss_fct(lm_logits.view(-1, lm_logits.size(-1)), labels.view(-1))
+
 
         masked_lm_loss = None
         if labels is not None:
@@ -168,7 +184,7 @@ class Model(BaseModel, T5ForConditionalGeneration):
             encoder_attention_mask=attention_mask,
             return_dict=return_dict,
         )
-        lm_logits = self.lm_head(decoder_outputs.last_hidden_state) + self.final_logits_bias
+        lm_logits = self.lm_head(decoder_outputs.last_hidden_state) #+ self.final_logits_bias
         self.predict_strategy(lm_logits, data_name, knowledge_name, encoded_info)
 
         if knowledge_name == 'none':

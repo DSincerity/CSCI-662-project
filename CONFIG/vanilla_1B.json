@@ -1,0 +1,6 @@
+{
+  "model_name": "vanilla_blenderbot_1B",
+  "pretrained_model_path": "facebook/blenderbot-1B-distill",
+  "custom_config_path": null,
+  "gradient_checkpointing": false
+}

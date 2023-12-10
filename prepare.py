@@ -19,13 +19,14 @@ parser.add_argument('--config_name', type=str, required=True)
 parser.add_argument('--inputter_name', type=str, required=True)
 parser.add_argument('--data_name', type=str, required=True)
 parser.add_argument('--knowledge_name', type=str, default=None)
-parser.add_argument('--train_input_file', type=str, required=True)
+parser.add_argument('--train_input_file', type=str, default=None)
 parser.add_argument('--max_input_length', type=int, default=150, help='discard data longer than this')
 parser.add_argument('--max_decoder_input_length', type=int, default=None, help='discard data longer than this')
 parser.add_argument('--max_knowledge_length', type=int, default=None, help='discard data longer than this')
 parser.add_argument('--label_num', type=int, default=None)
 parser.add_argument('--only_encode', action='store_true', help='only do encoding')
 parser.add_argument('--single_processing', action='store_true', help='do not use multiprocessing')
+parser.add_argument('--save_dir', type=str, default=None)
 
 args = parser.parse_args()
 
@@ -39,13 +40,19 @@ names = {
 inputter = inputters[args.inputter_name]()
 toker = build_model(only_toker=True, **names)
 
-args.train_input_file += (args.data_name + '/' + args.knowledge_name + '/train.txt')
+
+if args.train_input_file is None:
+    args.train_input_file = os.path.join("./_reformat/" , args.data_name, args.knowledge_name, 'train.txt')
+
 with open(args.train_input_file,'r',encoding='utf-8') as f:
     reader = f.readlines()
 
 if not os.path.exists(f'./DATA'):
     os.mkdir(f'./DATA')
-save_dir = f'./DATA/{args.inputter_name}.{args.config_name}.{args.data_name}.{args.knowledge_name}'
+if args.save_dir is None:
+    save_dir = f'./DATA/{args.inputter_name}.{args.config_name}.{args.data_name}.{args.knowledge_name}'
+else:
+    save_dir = args.save_dir
 if not exists(save_dir):
     os.mkdir(save_dir)
 

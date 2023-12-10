@@ -75,6 +75,7 @@ parser.add_argument('--num_beams', type=int, default=1)
 parser.add_argument("--length_penalty", type=float, default=1.0)
 parser.add_argument("--repetition_penalty", type=float, default=1.0)
 parser.add_argument("--no_repeat_ngram_size", type=int, default=0)
+parser.add_argument("--tok_dir", type=str, default=None)
 
 args = parser.parse_args()
 
@@ -84,7 +85,7 @@ args.device, args.n_gpu = device, n_gpu
 
 logger.info('initializing cuda...')
 _ = torch.tensor([1.], device=args.device)
-
+logger.info(f'gput coutns... {n_gpu}')
 #occupy_mem(os.environ["CUDA_VISIBLE_DEVICES"])
 
 set_seed(args.seed)
@@ -126,18 +127,33 @@ dataloader_kwargs = {
     'infer_batch_size': args.infer_batch_size,
 }
 
-pad = toker.pad_token_id
-if pad is None:
-    pad = toker.eos_token_id
-    assert pad is not None, 'either pad_token_id or eos_token_id should be provided'
-bos = toker.bos_token_id
-if bos is None:
-    bos = toker.cls_token_id
-    assert bos is not None, 'either bos_token_id or cls_token_id should be provided'
-eos = toker.eos_token_id
-if eos is None:
-    eos = toker.sep_token_id
-    assert eos is not None, 'either eos_token_id or sep_token_id should be provided'
+if args.tok_dir is None:
+    tok_dir = f'./DATA/{args.inputter_name}.{args.config_name}.{args.data_name}.{args.knowledge_name}'
+else:
+    tok_dir = args.tok_dir
+tok_path = os.path.join(tok_dir, 'tokenizer.pt')
+if os.path.exists(tok_path):
+    logger.info('>> Tokenizer is loaded from {}'.format(tok_path))
+    toker= torch.load(tok_path)
+
+if args.inputter_name == 'emp_dialog_t5':
+    logger.info('Setting pad, bos, eos tokens for emp_dialog_t5')
+    pad = toker.convert_tokens_to_ids(toker.pad_token)
+    bos = toker.convert_tokens_to_ids(toker.eos_token)
+    eos = toker.convert_tokens_to_ids(toker.eos_token)
+else:
+    pad = toker.pad_token_id
+    if pad is None:
+        pad = toker.eos_token_id
+        assert pad is not None, 'either pad_token_id or eos_token_id should be provided'
+    bos = toker.bos_token_id
+    if bos is None:
+        bos = toker.cls_token_id
+        assert bos is not None, 'either bos_token_id or cls_token_id should be provided'
+    eos = toker.eos_token_id
+    if eos is None:
+        eos = toker.sep_token_id
+        assert eos is not None, 'either eos_token_id or sep_token_id should be provided'
 
 generation_kwargs = {
     'max_length': args.max_length,
@@ -160,7 +176,7 @@ print(json.dumps(generation_kwargs, indent=2, ensure_ascii=False))
 
 for infer_idx, infer_input_file in enumerate(args.infer_input_file):
     set_seed(args.seed)
-    infer_input_file += (args.data_name + '/' + args.knowledge_name + '/test.txt')
+    #infer_input_file += (args.data_name + '/' + args.knowledge_name + '/test.txt')
     infer_dataloader = inputter.infer_dataloader(
         infer_input_file,
         toker,
@@ -187,20 +203,27 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
         )
         assert len(pointwise_loss) == len(pointwise_sample)
         metric_res['perplexity'] = float(np.exp(infer_loss))
-        
+
         ptr = 0
-    
+
     if not args.only_generate:
         metric = Metric(toker)
-    
+
     res = []
     other_res = {}
     decode = lambda x: _norm(toker.decode(x))
+    first_batch = True
     for batch, posts, references, sample_ids in infer_dataloader:
         batch = {k: v.to(device) if isinstance(v, Tensor) else v for k, v in batch.items()}
+        if first_batch:
+            print("="* 30, "This is the example of the input for inference", "="* 30)
+            print(toker.decode(batch['input_ids'][0].tolist()))
+            first_batch = False
+            print("="* 60)
+
         batch.update(generation_kwargs)
         encoded_info, generations = model.generate(data_name=args.data_name, knowledge_name=args.knowledge_name, **batch)
-        
+
         batch_other_res = None
         if 'other_res' in batch:
             batch_other_res = batch.pop('other_res')
@@ -210,7 +233,7 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                     other_res['acc'] = {}
                 if 'acc_map' not in other_res:
                     other_res['acc_map'] = batch_other_res['acc_map']
-                
+
                 for k, v in batch_other_res['acc_map'].items():
                     if k not in batch_other_res or v not in encoded_info: # TODO
                         continue # TODO
@@ -222,15 +245,15 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                         encoded_info[f'{v}_top3'] = encoded_info[f'{v}_top3'].tolist()
                     if f'{v}_dist' in encoded_info:
                         encoded_info[f'{v}_dist'] = encoded_info[f'{v}_dist'].tolist()
-                    
+
                     if k not in other_res['acc']:
                         other_res['acc'][k] = []
                     other_res['acc'][k].extend(batch_other_res[k])
-                    
+
                     if v not in other_res['acc']:
                         other_res['acc'][v] = []
                     other_res['acc'][v].extend(encoded_info[v])
-                    
+
                     if f'{v}_top1' in encoded_info:
                         if f'{v}_top1' not in other_res['acc']:
                             other_res['acc'][f'{v}_top1'] = []
@@ -239,15 +262,15 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                         if f'{v}_top3' not in other_res['acc']:
                             other_res['acc'][f'{v}_top3'] = []
                         other_res['acc'][f'{v}_top3'].extend(encoded_info[f'{v}_top3'])
-                    
+
                     if f'{v}_dist' in encoded_info:
                         if f'{v}_dist' not in other_res['acc']:
                             other_res['acc'][f'{v}_dist'] = []
                         other_res['acc'][f'{v}_dist'].extend(encoded_info[f'{v}_dist'])
-        
+
         if not args.only_encode:
             generations = [cut_seq_to_eos(each, eos) for each in generations.tolist()]
-            
+
         for idx in range(len(sample_ids)):
             p = posts[idx]
             r = references[idx]
@@ -258,23 +281,23 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                         g.append(gg)
                 else:
                     g = generations[idx]
-                
+
                 if not args.only_generate and args.num_return_sequences == 1:
                     ref, gen = [r], toker.decode(g) if not isinstance(g[0], list) else toker.decode(g[0])
                     metric.forword(ref, gen, chinese=args.chinese)
-                
+
                 if isinstance(g[0], list):
                     g  = [decode(gg) for gg in g]
                 else:
                     g = decode(g)
-                
+
                 tmp_res_to_append = {'sample_id': sample_ids[idx], 'post': p, 'response': r, 'generation': g}
                 #print('> context:   ', p)
                 #print('> generation:', g)
             else:
                 tmp_res_to_append = {'sample_id': sample_ids[idx], 'post': p, 'response': r}
             #print(json.dumps(tmp_res_to_append, indent=4, ensure_ascii=False))
-            
+
             other_res_to_append = {}
             if batch_other_res is not None:
                 if add_acc:
@@ -290,7 +313,7 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                             other_res_to_append[f'{v}_dist'] = ' '.join(map(str, encoded_info[f'{v}_dist'][idx]))
 
             tmp_res_to_append.update(other_res_to_append)
-            
+
             if not args.only_encode and not args.only_generate:
                 ptr_loss = pointwise_loss[ptr]
                 ptr_sample = pointwise_sample[ptr]
@@ -300,14 +323,14 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                 tmp_res_to_append['loss'] = turn_loss
                 tmp_res_to_append['ppl'] = turn_ppl
                 ptr += 1
-                
+
             res.append(tmp_res_to_append)
-        
+
         #raise EOFError
-        
+
     if not args.only_encode and not args.only_generate:
         assert ptr == len(pointwise_loss)
-    
+
     checkpoint_dir_path = '/'.join(args.load_checkpoint.split('/')[:-1])
     checkpoint_name = args.load_checkpoint.split('/')[-1]
     infer_input_file_name = infer_input_file.split('/')[-1]
@@ -320,21 +343,21 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
         save_dir = f'{checkpoint_dir_path}/res_{checkpoint_name}_{infer_input_file_name}'
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
-    
+
     with open(os.path.join(save_dir, f'gen.json'), 'w') as f:
         json.dump(res, f, ensure_ascii=False, indent=2, sort_keys=False)
-    
+
     with open(os.path.join(save_dir, f'gen.txt'), 'w') as f:
         for line in res:
             f.write(json.dumps(line, ensure_ascii=False) + '\n')
-    
+
     metric_res_list = None
     if not args.only_encode and not args.only_generate:
         metric_res_list = {}
         closed_res = metric.close()
         metric_res.update(closed_res[0])
         metric_res_list.update(closed_res[1])
-    
+
     if not args.only_generate:
         if 'acc' in other_res:
             for k, v in other_res['acc_map'].items():
@@ -346,7 +369,7 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                 with open(os.path.join(save_dir, f'confusion_matrix_{k}.json'), 'w') as f:
                     json.dump(confusion_matrix(kk, vv).tolist(), f)
                     print(f'{k}: confusion_matrix\n', confusion_matrix(kk, vv))
-                
+
                 metric_res[f'acc_{k}'] = np.mean(kk == vv)
                 metric_res[f'f1_micro_{k}'] = f1_score(kk, vv, average='micro')
                 metric_res[f'f1_macro_{k}'] = f1_score(kk, vv, average='macro')
@@ -357,7 +380,7 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                 if metric_res_list is None:
                     metric_res_list = {}
                 metric_res_list[f'acc_{k}'] = (kk == vv).astype(int).tolist()
-                
+
                 if f'{v}_top1' in other_res['acc']:
                     vv_top1 = np.array(other_res['acc'][f'{v}_top1'], dtype=int)
                     metric_res[f'acc_{k}_top1'] = np.mean(np.sum((kk.reshape(-1, 1) - vv_top1) == 0, axis=-1) != 0)
@@ -366,10 +389,10 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
                     vv_top3 = np.array(other_res['acc'][f'{v}_top3'], dtype=int)
                     metric_res[f'acc_{k}_top3'] = np.mean(np.sum((kk.reshape(-1, 1) - vv_top3) == 0, axis=-1) != 0)
                     metric_res_list[f'acc_{k}_top3'] = (np.sum((kk.reshape(-1, 1) - vv_top3) == 0, axis=-1) != 0).astype(int).tolist()
-    
+
         with open(os.path.join(save_dir, f'metric.json'), 'w') as f:
             json.dump(metric_res, f, ensure_ascii=False, indent=2, sort_keys=True)
-        
+
         if metric_res_list is not None:
             with open(os.path.join(save_dir, f'metric_list.json'), 'w') as f:
                 json.dump(metric_res_list, f)
@@ -384,16 +407,16 @@ for infer_idx, infer_input_file in enumerate(args.infer_input_file):
             else:
                 ref = line['response']
             ref = ' '.join(nltk.word_tokenize(ref.lower()))
-            
+
             if isinstance(line['generation'], list):
                 hyp = line['generation'][0]
             else:
                 hyp = line['generation']
             hyp = ' '.join(nltk.word_tokenize(hyp.lower()))
-            
+
             ref_list.append(ref)
             hyp_list.append(hyp)
-        
+
         from metric import NLGEval
         metric = NLGEval()
         metric_res, metric_res_list = metric.compute_metrics([ref_list], hyp_list)

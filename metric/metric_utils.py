@@ -34,6 +34,8 @@ def get_data_dir():
 
 
 import nltk
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from tqdm import tqdm
@@ -45,6 +47,7 @@ from torch.nn.init import xavier_uniform_
 import torch.nn.functional as F
 from torch.nn import CrossEntropyLoss
 import argparse
+
 
 class BERT_(nn.Module):
     def __init__(self, model_name_or_path, cache_dir, config):
@@ -91,8 +94,8 @@ class BERT(nn.Module):
 class InitModel(object):
     def __init__(self):
         model_name_or_path = 'roberta-large'
-        cache_dir = '/storage/ydeng/bert'
-        output_dir = '/storage/ydeng/workspace/esconv/blenderbot/metric/model/initiative/best_checkpoint'
+        cache_dir = '.cache'
+        output_dir = './metric/ydeng/workspace/esconv/blenderbot/metric/model/initiative/best_checkpoint'
 
         config = RobertaConfig.from_pretrained(model_name_or_path, cache_dir=cache_dir)
         self.tokenizer = RobertaTokenizer.from_pretrained(model_name_or_path, do_lower_case=True, cache_dir=cache_dir)
@@ -115,9 +118,9 @@ class InitModel(object):
         else:
             model.load_state_dict(torch.load(os.path.join(output_dir, 'pytorch_model.bin')))
 
-        
+
         self.model_to_eval = model.module if hasattr(model, 'module') else model
-    
+
     def predict(self, user_text, system_text):
         user_id = self.tokenizer.encode('[user]' + user_text.encode('utf-8', 'replace').decode('utf-8'))[1:]
         system_id = self.tokenizer.encode('[system]' + system_text.encode('utf-8', 'replace').decode('utf-8'))[1:]
@@ -135,8 +138,8 @@ class InitModel(object):
 class EmoModel(object):
     def __init__(self):
         model_name_or_path = 'roberta-large'
-        cache_dir = '/storage/ydeng/bert'
-        output_dir = '/storage/ydeng/workspace/esconv/blenderbot/metric/model/emotion/best_checkpoint'
+        cache_dir = '.cache'
+        output_dir = './metric/model/emotion/best_checkpoint'
 
         config = RobertaConfig.from_pretrained(model_name_or_path, cache_dir=cache_dir)
         self.tokenizer = RobertaTokenizer.from_pretrained(model_name_or_path, do_lower_case=True, cache_dir=cache_dir)
@@ -159,9 +162,9 @@ class EmoModel(object):
         else:
             model.load_state_dict(torch.load(os.path.join(output_dir, 'pytorch_model.bin')))
 
-        
+
         self.model_to_eval = model.module if hasattr(model, 'module') else model
-    
+
     def predict(self, utterance):
         input_id = self.tokenizer.encode(utterance.encode('utf-8', 'replace').decode('utf-8'))
         input_ids = torch.tensor([input_id]).long()
@@ -178,8 +181,8 @@ class EmoModel(object):
 class USi(object):
     def __init__(self):
         model_name_or_path = 'facebook/blenderbot_small-90M'
-        cache_dir = '/storage/ydeng/bert'
-        output_dir = '/storage/ydeng/workspace/esconv/blenderbot/metric/model/usi/best_checkpoint'
+        cache_dir = '.cache'
+        output_dir = './metric/model/usi/best_checkpoint'
 
         config = BlenderbotSmallConfig.from_pretrained(model_name_or_path, cache_dir=cache_dir)
         self.tokenizer = BlenderbotSmallTokenizer.from_pretrained(model_name_or_path, do_lower_case=True, cache_dir=cache_dir)
@@ -188,12 +191,15 @@ class USi(object):
         model = BlenderbotSmallForConditionalGeneration.from_pretrained(model_name_or_path, from_tf=bool('.ckpt' in model_name_or_path), config=config, cache_dir=cache_dir)
         model.resize_token_embeddings(len(self.tokenizer))
 
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(">> device:", self.device)
+
         torch.manual_seed(42)
         if torch.cuda.is_available():
+            print(">> CUDA available")
             torch.cuda.manual_seed_all(42)
 
-        model.to(self.device)
+        #model.to(self.device)
 
 
         if hasattr(model, 'module'):
@@ -201,9 +207,11 @@ class USi(object):
         else:
             model.load_state_dict(torch.load(os.path.join(output_dir, 'pytorch_model.bin')))
 
+        model.to(self.device)
+
         self.max_seq_length = 160
         self.model_to_eval = model.module if hasattr(model, 'module') else model
-    
+
     def predict(self, context):
         process = lambda x: self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize(x))
         context_id = process('[situation]') + process(context['situation'])
@@ -220,7 +228,7 @@ class USi(object):
                 num_beams=1,
                 max_length=40,
                 min_length=5,
-                early_stopping=True, 
+                early_stopping=True,
                 temperature=0.7,
                 top_k=30,
                 top_p=0.3,
@@ -231,7 +239,7 @@ class USi(object):
 
 
 def mi_metric(data_file, output_file, res_file, use_ucm=False, use_ref=False):
-    
+
     if use_ucm:
         init_model = InitModel()
     USi_model = USi()
@@ -249,11 +257,11 @@ def mi_metric(data_file, output_file, res_file, use_ucm=False, use_ref=False):
 
     with open(output_file, 'r') as infile:
         output = json.load(infile)
-            
+
     print(len(output))
-    
+
     metrics = {'pro':[], 'inf':{'I':[], 'N':[]}, 'rep':{'I':[], 'N':[]}, 'rel':{'I':[], 'N':[]}}
-    
+
     idx = 0
     new_data = []
     with open(data_file, 'r', encoding="utf-8") as infile,\
@@ -276,7 +284,7 @@ def mi_metric(data_file, output_file, res_file, use_ucm=False, use_ref=False):
                     usr_words = usr_words | words
                     all_words = all_words | words
                     continue
-            
+
                 if i > 0:
                     res = output[idx]
                     if use_ref:
@@ -326,18 +334,18 @@ def mi_metric(data_file, output_file, res_file, use_ucm=False, use_ref=False):
                             else:
                                 init = 'N'
                                 metrics['pro'].append(0)
-                    
+
                     turn['initiative'] = init
                     metrics['inf'][init].append(inf)
                     metrics['rep'][init].append(rep)
                     metrics['rel'][init].append(pred_emo-current_emo)
                     idx+=1
-                
+
                 context['dialog'].append(turn)
-            
+
             new_data.append(data)
         json.dump(new_data, outfile, indent=2)
-    
+
     mi_res = {}
     mi_res['pro'] = float(sum(metrics['pro']))/len(metrics['pro'])
     mi_res['inf_i'] = float(sum(metrics['inf']['I']))/len(metrics['inf']['I'])

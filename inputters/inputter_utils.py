@@ -63,7 +63,11 @@ class BucketingDataLoader(object):
         config_name = kwargs.pop('config_name')
         data_name = kwargs.pop('data_name')
         knowledge_name = kwargs.pop('knowledge_name')
-        with open(f'./DATA/{inputter_name}.{config_name}.{data_name}.{knowledge_name}/data.pkl', 'rb') as f:
+        train_data_path= kwargs.pop('train_data_path')
+        if train_data_path is None:
+            train_data_path = f'./DATA/{inputter_name}.{config_name}.{data_name}.{knowledge_name}/data.pkl'
+        assert 'data.pkl' in train_data_path, 'data.pkl must be in train_data_path'
+        with open(train_data_path, 'rb') as f:
             self.data = pickle.load(f)
         self.toker = toker
         self.data_name = data_name

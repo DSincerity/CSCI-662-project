@@ -1,0 +1,23 @@
+python infer.py \
+    --config_name strat \
+    --inputter_name strat \
+    --data_name esconv \
+    --knowledge_name sbert \
+    --add_nlg_eval \
+    --add_mi_analysis \
+    --seed 13 \
+    --load_checkpoint ./DATA/strat.strat.gpt/best/best.bin \
+    --fp16 false \
+    --max_input_length 256 \
+    --max_decoder_input_length 40 \
+    --max_length 40 \
+    --min_length 15 \
+    --infer_batch_size 64 \
+    --infer_input_file ./_reformat/ds_esconv_gpt/sbert_gpt/test.txt \
+    --temperature 0.7 \
+    --tok_dir ./DATA/strat.strat.gpt \
+    --top_k 30 \
+    --top_p 0.3 \
+    --num_beams 1 \
+    --repetition_penalty 1 \
+    --no_repeat_ngram_size 3

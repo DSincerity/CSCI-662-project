@@ -51,6 +51,7 @@ Before running the script, training set of AugESC should be in "./_reformat/AugE
 1. Run 'bash RUN/prepare_vanila_blenderbot_AugESC.sh' to prepare the data.
 2. Run 'bash RUN/train_vanila_blenderbot_AugESC.sh' to train the model.
 3. Run 'bash RUN/infer_vanila_blenderbot_AugESC.sh' to evaluate the model.
+
 Check generating_augesc_datasets.py for dataset generation details. 
 
 ### Ablations: KEMI wo/ specific knoweldge types (Affective, Casusal, Cognitive)

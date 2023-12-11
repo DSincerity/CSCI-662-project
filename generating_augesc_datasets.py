@@ -94,18 +94,22 @@ len(train_examples) + len(val_examples) + len(test_examples)
 
 # In[61]:
 
+# combine data with esconv dataset
+esconv_train = open("_reformat/esconv/sbert/train.txt").readlines() 
+esconv_val = open("_reformat/esconv/sbert/val.txt").readlines() 
+esconv_test = open("_reformat/esconv/sbert/test.txt").readlines() 
 
 ### write to files 
 import json
 
-train_file = open("/Users/priyanka/Downloads/augesc_train.txt", "w")
-for t in train_examples: 
+train_file = open("/Users/priyanka/Downloads/combined_train.txt", "w")
+for t in train_examples + esconv_train: 
     train_file.write(json.dumps(t) + "\n")
-val_file = open("/Users/priyanka/Downloads/augesc_val.txt", "w")
-for t in val_examples: 
+val_file = open("/Users/priyanka/Downloads/combined_val.txt", "w")
+for t in val_examples + esconv_val: 
     val_file.write(json.dumps(t) + "\n")
-test_file = open("/Users/priyanka/Downloads/augesc_test.txt", "w")
-for t in test_examples: 
+test_file = open("/Users/priyanka/Downloads/combined_test.txt", "w")
+for t in test_examples + esconv_test: 
     test_file.write(json.dumps(t) + "\n")
 
 

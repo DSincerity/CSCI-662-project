@@ -46,11 +46,12 @@ conda activate cuda
 3. Run 'bash RUN/infer_vanila_t5.sh' to evaluate the model.
 
 ### Blenderbot augmented with AugESC (wo/ knoweldge injection + wo/ Strategy prediction )
-Before runnign the script, training set of AugESC should be in "./_reformat/AugESC/combined_train.txt"
+Before running the script, training set of AugESC should be in "./_reformat/AugESC/combined_train.txt"
 * "combined_train.txt" refers to the dataset combined with ESConv dataset after being preprocessed with the same manner in KEMI paper. It can be downloaded here [url](https://drive.google.com/file/d/1Qghab_aMe02FABmfH-8FnJ1eD6YeMQOL/view?usp=drive_link)
 1. Run 'bash RUN/prepare_vanila_blenderbot_AugESC.sh' to prepare the data.
 2. Run 'bash RUN/train_vanila_blenderbot_AugESC.sh' to train the model.
 3. Run 'bash RUN/infer_vanila_blenderbot_AugESC.sh' to evaluate the model.
+Check generating_augesc_datasets.py for dataset generation details. 
 
 ### Ablations: KEMI wo/ specific knoweldge types (Affective, Casusal, Cognitive)
 Before runnign the script, the file without specific knowledge should be in "./_reformat/ds_esconv_datasets/sbert_wo_{affective/causal/cognitive}/(train/test/valid).txt"
